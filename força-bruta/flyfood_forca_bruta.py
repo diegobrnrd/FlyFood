@@ -101,4 +101,4 @@ def funcao_principal():
 if __name__ == '__main__':
     import timeit
     tempo_de_execucao = timeit.timeit(funcao_principal, number=1)
-    print(f"Tempo de execução: {tempo_de_execucao} segundos")
+    print(f'Tempo de execução: {tempo_de_execucao} segundos')

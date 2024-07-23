@@ -14,8 +14,8 @@ def abrir_arquivo():
 
 def obter_coordenadas(matr):
     """Coleta as coordenadas dos pontos de interesse e as armazena em um dicionário."""
-    coord_1, coord_2 = {}, {}  # Dois dicionários são criados: um sem o ponto R e o outro completo.
-
+    coord_1, coord_2 = {}, {}
+    # Dois dicionários são criados: um sem o ponto R e o outro completo.
     for x, l in enumerate(matr):
         for y, c in enumerate(l):
             if c == 'A' or c == 'B' or c == 'C' or c == 'D':
@@ -28,16 +28,18 @@ def obter_coordenadas(matr):
     return coord_1, coord_2
 
 
-def gerar_rotas(cord):
+def gerar_rotas(coord):
     """Gera todas as combinações possíveis de rotas."""
     import itertools
 
-    pontos = [None for _ in range(len(cord))]
-    for i, p in enumerate(cord):
+    pontos = [None for _ in range(len(coord))]
+    for i, p in enumerate(coord):
         pontos[i] = p
 
     permutacoes = list(itertools.permutations(pontos))
+    # A permutação é feita sem o ponto R.
     permutacoes_com_r = [('R',) + perm + ('R',) for perm in permutacoes]
+    # O ponto R é adicionado no início e no fim de todas as permutações.
 
     return permutacoes_com_r
 
@@ -45,9 +47,10 @@ def gerar_rotas(cord):
 def calcular_rotas(coord, rotass):
     """Calcula a distância total para cada uma das rotas possíveis."""
     resultado_final = {x: -1 for x in rotass}
-
+    # Inicialmente, as distâncias são inicializadas com o valor -1.
     for rota_atual in rotass:
         resultado_final[rota_atual] = calcular_rota(coord, rota_atual)
+        # A rota será a chave e a distância será o valor associado.
 
     return resultado_final
 
@@ -55,7 +58,6 @@ def calcular_rotas(coord, rotass):
 def calcular_rota(coord, rota_atual):
     """Calcula a distância total de uma rota específica."""
     soma = 0
-
     for i in range(len(rota_atual) - 1):
         soma += calcular_distancia(coord[rota_atual[i]], coord[rota_atual[i + 1]])
 
@@ -68,7 +70,7 @@ def calcular_distancia(ponto_1, ponto_2):
 
 
 def obter_menor_percurso(dist):
-    """Encontre o menor percurso e sua distância em dronômetros."""
+    """Encontra o menor percurso e sua distância em dronômetros."""
     chave, menor = '', float('inf')
 
     for chav, valor in dist.items():
@@ -82,7 +84,7 @@ def obter_menor_percurso(dist):
 def saida(chave, valor):
     """Formata a saída de dados."""
     rota = [x for x in chave if x != 'R']
-    saida_formatada = f'Rota: {" ".join(rota)} | Percurso: {valor} dronômetros'
+    saida_formatada = f'Rota: {" ".join(rota)} - Percurso: {valor} dronômetros'
     return saida_formatada
 
 

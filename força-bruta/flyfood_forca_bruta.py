@@ -1,5 +1,8 @@
-# Coleta a quantidade de linha(s), coluna(s) e a matriz armazenada em uma lista
+"""FlyFood - Força Bruta"""
+
+
 def abrir_arquivo():
+    """Obtém a quantidade de linhas e colunas, além da matriz armazenada em uma lista."""
     with open('dados.txt', 'r') as arquivo:
         lin, col = arquivo.readline().split()
         matr = [[] for _ in range(int(lin))]
@@ -9,10 +12,9 @@ def abrir_arquivo():
     return int(lin), int(col), matr
 
 
-# Converte a matriz em dicionário com suas respectivas coordenadas
-# Dois dicionários são criados, um sem o ponto R e o outro completo
 def obter_coordenadas(matr):
-    coord_1, coord_2 = {}, {}
+    """Coleta as coordenadas dos pontos de interesse e as armazena em um dicionário."""
+    coord_1, coord_2 = {}, {}  # Dois dicionários são criados: um sem o ponto R e o outro completo.
 
     for x, l in enumerate(matr):
         for y, c in enumerate(l):
@@ -26,8 +28,8 @@ def obter_coordenadas(matr):
     return coord_1, coord_2
 
 
-# Gera todas as rotas possíveis
 def gerar_rotas(cord):
+    """Gera todas as combinações possíveis de rotas."""
     import itertools
 
     pontos = [None for _ in range(len(cord))]
@@ -40,8 +42,8 @@ def gerar_rotas(cord):
     return permutacoes_com_r
 
 
-# Cálcula a distância de todas as rotas | Função 1-3
 def calcular_rotas(coord, rotass):
+    """Calcula a distância total para cada uma das rotas possíveis."""
     resultado_final = {x: -1 for x in rotass}
 
     for rota_atual in rotass:
@@ -50,8 +52,8 @@ def calcular_rotas(coord, rotass):
     return resultado_final
 
 
-# Cálcula a distância de uma rota | Função 2-3
 def calcular_rota(coord, rota_atual):
+    """Calcula a distância total de uma rota específica."""
     soma = 0
 
     for i in range(len(rota_atual) - 1):
@@ -60,14 +62,13 @@ def calcular_rota(coord, rota_atual):
     return soma
 
 
-# Cálcula a distância entre dois pontos | Função 3-3
 def calcular_distancia(ponto_1, ponto_2):
-
+    """Calcula a distância entre dois pontos."""
     return abs(ponto_2[0] - ponto_1[0]) + abs(ponto_2[1] - ponto_1[1])
 
 
-# Encontra qual o menor percurso e sua distância em dronômetros
 def obter_menor_percurso(dist):
+    """Encontre o menor percurso e sua distância em dronômetros."""
     chave, menor = '', float('inf')
 
     for chav, valor in dist.items():
@@ -78,15 +79,15 @@ def obter_menor_percurso(dist):
     return chave, menor
 
 
-# Formata a saída
 def saida(chave, valor):
+    """Formata a saída de dados."""
     rota = [x for x in chave if x != 'R']
     saida_formatada = f'Rota: {" ".join(rota)} | Percurso: {valor} dronômetros'
     return saida_formatada
 
 
-# Função principal que chama todas as outras
 def funcao_principal():
+    """Função principal que gerencia a chamada de todas as outras funções."""
     linha, coluna, matriz = abrir_arquivo()
     coordenadas_sem_r, coordenadas_com_r = obter_coordenadas(matriz)
     rotas = gerar_rotas(coordenadas_sem_r)

@@ -51,18 +51,18 @@ def calcular_rotas(coordenadas, rotas):
     # As rotas são as chaves.
     for rota_atual in rotas:
         distancias[rota_atual] = calcular_rota(coordenadas, rota_atual)
-        # É atribuído o valor de cada rota atual.
+        # É atribuída a distância de cada rota atual.
 
     return distancias
 
 
 def calcular_rota(coordenadas, rota_atual):
     """Calcula a distância total de uma rota específica."""
-    soma = 0
+    distancia = 0
     for i in range(len(rota_atual) - 1):
-        soma += calcular_distancia(coordenadas[rota_atual[i]], coordenadas[rota_atual[i + 1]])
+        distancia += calcular_distancia(coordenadas[rota_atual[i]], coordenadas[rota_atual[i + 1]])
 
-    return soma
+    return distancia
 
 
 def calcular_distancia(ponto_1, ponto_2):
@@ -91,7 +91,7 @@ def saida(chave, valor):
 
 
 def central():
-    """Função principal que gerencia a chamada de todas as outras funções."""
+    """Função central que gerencia a chamada de todas as outras funções."""
     linha, coluna, matriz = abrir_arquivo()
     coordenadas_com_r, coordenadas_sem_r = obter_coordenadas(matriz)
     rotas = gerar_rotas(coordenadas_sem_r)

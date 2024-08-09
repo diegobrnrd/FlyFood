@@ -27,11 +27,7 @@ def gerar_rotas(coordenadas):
     """Gera todas as combinações possíveis de rotas."""
     import itertools
 
-    pontos = [None for _ in range(len(coordenadas))]
-    for i, p in enumerate(coordenadas):
-        pontos[i] = p
-
-    pontos = [x for x in pontos if x != 'R']
+    pontos = [ponto for ponto in coordenadas if ponto != 'R']
     # O ponto R é apagado.
     permutacoes = list(itertools.permutations(pontos))
     # A permutação é feita sem o ponto R.
@@ -74,7 +70,7 @@ def exibir_resultado(menor_percuso):
     print(f'Rota: {" ".join(rota)} - Percurso: {menor_percuso[1]} dronômetros.')
 
 
-def central():
+def funcao_central():
     """Função central que gerencia a chamada de todas as outras funções."""
     matriz = ler_arquivo()
     coordenadas = obter_coordenadas(matriz)
@@ -86,5 +82,5 @@ def central():
 if __name__ == '__main__':
     """Cronometra o tempo necessário para a execução do algoritmo."""
     import timeit
-    tempo_de_execucao = timeit.timeit(central, number=1)
-    print(f'Tempo de execução: {tempo_de_execucao} segundos.')
+    tempo_de_execucao = timeit.timeit(funcao_central, number=1)
+    print(f'Tempo de execução: {tempo_de_execucao:.6f} segundos.')

@@ -27,12 +27,12 @@ def gerar_rotas(coordenadas):
     """Gera todas as combinações possíveis de rotas."""
     import itertools
 
-    pontos = [ponto for ponto in coordenadas if ponto != 'R']
     # O ponto R é apagado.
-    permutacoes = list(itertools.permutations(pontos))
+    pontos = [ponto for ponto in coordenadas if ponto != 'R']
     # A permutação é feita sem o ponto R.
-    permutacoes_com_r = [('R',) + perm + ('R',) for perm in permutacoes]
+    permutacoes = list(itertools.permutations(pontos))
     # O ponto R é adicionado no início e no fim de todas as permutações.
+    permutacoes_com_r = [('R',) + perm + ('R',) for perm in permutacoes]
 
     return permutacoes_com_r
 
@@ -65,8 +65,8 @@ def calcular_distancia(ponto_1, ponto_2):
 
 def exibir_resultado(menor_percuso):
     """Formata a saída de dados."""
-    rota = [x for x in menor_percuso[0] if x != 'R']
     # O ponto R inicial e final são retirados para exibição do resultado.
+    rota = [x for x in menor_percuso[0] if x != 'R']
     print(f'Rota: {" ".join(rota)} - Percurso: {menor_percuso[1]} dronômetros.')
 
 
